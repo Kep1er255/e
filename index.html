@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>らくがきと音楽</title>
+   <link rel="stylesheet" href="https://Roulette-of-fate.github.io/e/stylesheet.css">
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="drawingCanvas"></canvas>
+        <div id="controls">
+            <input type="color" id="colorPicker" value="#000000">
+            <input type="range" id="lineWidth" min="1" max="10" value="2">
+            <button id="clearButton">リセット</button>
+            <button id="saveButton">保存</button>
+        </div>
+    </div>
+    <div id="youtube-player">
+        <iframe id="youtubeIframe" src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
