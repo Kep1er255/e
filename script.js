@@ -28,15 +28,31 @@ function draw(e) {
     ctx.strokeStyle = currentColor;
     ctx.lineCap = 'round';
 
-    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+    const y = (e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+
+    ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.moveTo(x, y);
 }
 
+// Mouse events
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mouseup', endDrawing);
 canvas.addEventListener('mousemove', draw);
+
+// Touch events
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startDrawing(e.touches[0]);
+});
+canvas.addEventListener('touchend', endDrawing);
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    draw(e.touches[0]);
+});
 
 colorPicker.addEventListener('input', (e) => {
     currentColor = e.target.value;
