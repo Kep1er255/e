@@ -12,6 +12,14 @@ let drawing = false;
 let currentColor = '#000000';
 let currentLineWidth = 2;
 
+// Get the correct canvas position
+function getCanvasPosition(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    return { x, y };
+}
+
 function startDrawing(e) {
     drawing = true;
     draw(e);
@@ -28,9 +36,7 @@ function draw(e) {
     ctx.strokeStyle = currentColor;
     ctx.lineCap = 'round';
 
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
-    const y = (e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+    const { x, y } = getCanvasPosition(e);
 
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -46,12 +52,14 @@ canvas.addEventListener('mousemove', draw);
 // Touch events
 canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    startDrawing(e.touches[0]);
+    const touch = e.touches[0];
+    startDrawing(touch);
 });
 canvas.addEventListener('touchend', endDrawing);
 canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    draw(e.touches[0]);
+    const touch = e.touches[0];
+    draw(touch);
 });
 
 colorPicker.addEventListener('input', (e) => {
